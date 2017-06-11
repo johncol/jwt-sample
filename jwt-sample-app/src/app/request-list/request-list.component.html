@@ -1,0 +1,17 @@
+<h2>Request List</h2>
+<table class="table">
+  <thead>
+    <tr>
+      <th>Request Id</th>
+      <th>Identification</th>
+      <th>Done</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let request of requests">
+      <td>{{request.id}}</td>
+      <td>{{request.identification}}</td>
+      <td>{{request.done ? 'Yes' : 'No'}}</td>
+    </tr>
+  </tbody>
+</table>

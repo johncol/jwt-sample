@@ -1,0 +1,7 @@
+.form-control.ng-touched.ng-invalid {
+  border-color: #900;
+}
+.ng-touched.ng-invalid + .error {
+  color: #900;
+  font-size: 12px;
+}

@@ -1,0 +1,15 @@
+<h2>Complete Request</h2>
+<button
+  type="button"
+  (click)="updateRequest()"
+  [disabled]="!this.inSession || success"
+  class="btn btn-primary"
+>Update request to completed</button>
+
+<div class="alert alert-danger" *ngIf="httpError">
+  A server error occured
+</div>
+
+<div class="alert alert-success" *ngIf="success">
+  The request was updated to "done"
+</div>
