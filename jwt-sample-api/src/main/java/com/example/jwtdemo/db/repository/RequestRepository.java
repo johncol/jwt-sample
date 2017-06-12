@@ -1,6 +1,6 @@
-package com.example.jwtdemo.repository;
+package com.example.jwtdemo.db.repository;
 
-import com.example.jwtdemo.entity.Request;
+import com.example.jwtdemo.db.entity.Request;
 import java.math.BigDecimal;
 import java.util.Optional;
 import org.springframework.data.jpa.repository.JpaRepository;

@@ -3,12 +3,13 @@ package com.example.jwtdemo.controller.model;
 import java.io.Serializable;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 
-public class CreateRequestResult implements Serializable {
+public class CreateRequestResponse implements Serializable {
 
   private Long request;
   private boolean success;
+  private JwtAuthenticationResponse jwt;
 
-  public CreateRequestResult(Long request, boolean success) {
+  public CreateRequestResponse(Long request, boolean success) {
     this.request = request;
     this.success = success;
   }
@@ -27,6 +28,14 @@ public class CreateRequestResult implements Serializable {
 
   public void setSuccess(boolean success) {
     this.success = success;
+  }
+
+  public JwtAuthenticationResponse getJwt() {
+    return jwt;
+  }
+
+  public void setJwt(JwtAuthenticationResponse jwt) {
+    this.jwt = jwt;
   }
 
   @Override

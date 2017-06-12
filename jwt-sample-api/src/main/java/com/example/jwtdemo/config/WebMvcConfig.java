@@ -9,15 +9,15 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter
 
 @EnableWebMvc
 @Configuration
-public class WebConfig extends WebMvcConfigurerAdapter {
+public class WebMvcConfig extends WebMvcConfigurerAdapter {
 
-  private static final Logger logger = LoggerFactory.getLogger(WebConfig.class);
+  private static final Logger logger = LoggerFactory.getLogger(WebMvcConfig.class);
 
   @Override
   public void addCorsMappings(CorsRegistry registry) {
     logger.info("Setting up CORs");
     registry.addMapping("/**")
-        .allowedOrigins("http://localhost:4200", "*")
+        .allowedOrigins("http://localhost:4200")
         .allowedMethods("GET", "POST", "PUT", "OPTIONS")
         .allowedHeaders("*");
   }

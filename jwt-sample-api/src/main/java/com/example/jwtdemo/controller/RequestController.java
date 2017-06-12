@@ -1,8 +1,10 @@
 package com.example.jwtdemo.controller;
 
 import com.example.jwtdemo.controller.model.CreateRequestDto;
-import com.example.jwtdemo.controller.model.CreateRequestResult;
-import com.example.jwtdemo.entity.Request;
+import com.example.jwtdemo.controller.model.CreateRequestResponse;
+import com.example.jwtdemo.controller.model.JwtAuthenticationResponse;
+import com.example.jwtdemo.db.entity.Request;
+import com.example.jwtdemo.security.service.UserAuthenticationService;
 import com.example.jwtdemo.service.RequestService;
 import java.util.List;
 import javax.validation.Valid;
@@ -10,6 +12,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.mobile.device.Device;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -18,9 +21,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-/**
- * @author John Alexander Cely Suarez
- */
 @RestController
 @RequestMapping("/request")
 public class RequestController {
@@ -30,11 +30,19 @@ public class RequestController {
   @Autowired
   private RequestService requestService;
 
+  @Autowired
+  private UserAuthenticationService userAuthenticationService;
+
   @PostMapping
-  public ResponseEntity<CreateRequestResult> create(@RequestBody @Valid CreateRequestDto dto) {
+  public ResponseEntity<CreateRequestResponse> create(@RequestBody @Valid CreateRequestDto dto, Device device) {
     logger.info("Create request {}", dto);
-    CreateRequestResult result = requestService.create(dto);
-    return ResponseEntity.ok(result);
+    CreateRequestResponse response = requestService.create(dto);
+    if (response.isSuccess()) {
+      String identification = Long.valueOf(dto.getIdentification().longValue()).toString();
+      JwtAuthenticationResponse jwt = userAuthenticationService.authenticate(identification, device);
+      response.setJwt(jwt);
+    }
+    return ResponseEntity.ok(response);
   }
 
   @PutMapping("/{id}")

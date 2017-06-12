@@ -1,4 +1,4 @@
-package com.example.jwtdemo.entity;
+package com.example.jwtdemo.db.entity;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
@@ -7,10 +7,12 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 
 @Entity
+@Table(name = "REQUEST")
 public class Request implements Serializable {
 
   @Id

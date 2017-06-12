@@ -11,6 +11,7 @@ import { RequestListComponent } from './request-list/request-list.component';
 import { NavigationComponent } from './navigation/navigation.component';
 import { RequestService } from './services/request.service';
 import { SessionService } from './services/session.service';
+import { AuthService } from './services/auth.service';
 
 @NgModule({
   declarations: [
@@ -26,7 +27,11 @@ import { SessionService } from './services/session.service';
     ReactiveFormsModule,
     HttpModule
   ],
-  providers: [RequestService, SessionService],
+  providers: [
+    RequestService,
+    SessionService,
+    AuthService,
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
