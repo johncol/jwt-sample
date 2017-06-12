@@ -1,8 +1,9 @@
-package com.example.jwtdemo.security.service;
+package com.example.jwtdemo.security.service.impl;
 
 import com.example.jwtdemo.controller.model.JwtAuthenticationResponse;
 import com.example.jwtdemo.security.IdentificationOnlyAuthenticationToken;
-import com.example.jwtdemo.security.JwtTokenUtil;
+import com.example.jwtdemo.security.service.JwtTokenService;
+import com.example.jwtdemo.security.service.UserAuthenticationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mobile.device.Device;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -23,7 +24,7 @@ public class UserAuthenticationServiceImpl implements UserAuthenticationService 
   private UserDetailsService userDetailsService;
 
   @Autowired
-  private JwtTokenUtil jwtTokenUtil;
+  private JwtTokenService jwtTokenService;
 
   @Override
   public JwtAuthenticationResponse authenticate(String identification, Device device) throws AuthenticationException {
@@ -31,7 +32,7 @@ public class UserAuthenticationServiceImpl implements UserAuthenticationService 
     Authentication authentication = authenticationManager.authenticate(authToken);
     SecurityContextHolder.getContext().setAuthentication(authentication);
     UserDetails userDetails = userDetailsService.loadUserByUsername(identification);
-    String jwtToken = jwtTokenUtil.generateToken(userDetails, device);
+    String jwtToken = jwtTokenService.generateToken(userDetails, device);
     return new JwtAuthenticationResponse(jwtToken);
   }
 

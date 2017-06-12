@@ -1,4 +1,4 @@
-package com.example.jwtdemo.security.service;
+package com.example.jwtdemo.security.service.impl;
 
 import com.example.jwtdemo.security.JwtUserFactory;
 import com.example.jwtdemo.security.db.UserRepository;

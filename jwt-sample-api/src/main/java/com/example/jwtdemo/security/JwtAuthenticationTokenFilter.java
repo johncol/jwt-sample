@@ -1,6 +1,7 @@
 package com.example.jwtdemo.security;
 
 import com.example.jwtdemo.controller.RequestController;
+import com.example.jwtdemo.security.service.JwtTokenService;
 import java.io.IOException;
 import javax.servlet.FilterChain;
 import javax.servlet.ServletException;
@@ -26,7 +27,7 @@ public class JwtAuthenticationTokenFilter extends OncePerRequestFilter {
   private UserDetailsService userDetailsService;
 
   @Autowired
-  private JwtTokenUtil jwtTokenUtil;
+  private JwtTokenService jwtTokenService;
 
   @Autowired
   private JwtProperties properties;
@@ -34,17 +35,18 @@ public class JwtAuthenticationTokenFilter extends OncePerRequestFilter {
   @Override
   protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain chain) throws ServletException, IOException {
     String authToken = getAuthToken(request.getHeader(properties.getHeader()));
-    String username = jwtTokenUtil.getUsernameFromToken(authToken);
+    String username = jwtTokenService.getUsernameFromToken(authToken);
     logger.info("Checking authentication for user {}", username);
 
     if (username != null && SecurityContextHolder.getContext().getAuthentication() == null) {
       UserDetails userDetails = this.userDetailsService.loadUserByUsername(username);
-      if (jwtTokenUtil.validateToken(authToken, userDetails)) {
+      if (jwtTokenService.validateToken(authToken, userDetails)) {
         UsernamePasswordAuthenticationToken authentication = new UsernamePasswordAuthenticationToken(userDetails, null, userDetails.getAuthorities());
         authentication.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
         SecurityContextHolder.getContext().setAuthentication(authentication);
       }
     }
+
     chain.doFilter(request, response);
   }
 
